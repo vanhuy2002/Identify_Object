@@ -1,9 +1,13 @@
-package com.example.identify_object;
+package com.example.identify_object.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.identify_object.History.HistoryFragment;
+import com.example.identify_object.ScanFragment;
+import com.example.identify_object.StudyFragment;
 
 
 public class ViewPagerBottomNavigationAdapter extends FragmentStateAdapter {
