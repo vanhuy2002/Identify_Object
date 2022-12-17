@@ -10,6 +10,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
@@ -167,9 +168,7 @@ public class ScanFragment extends Fragment {
 
         });
 
-       camera = cameraProvider.bindToLifecycle(getActivity(), cameraSelector, preview,
-                imageCapture, imageAnalysis);
-        flashSwitch(camera);
+        camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis,preview);
     }
 
     @Override
