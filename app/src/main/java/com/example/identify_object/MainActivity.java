@@ -41,9 +41,6 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ObjectDetector objectDetector;
-    public PreviewView previewView;
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     public static BottomNavigationView bottomNavigationView;
     private ViewPager2 viewPager2;
 
@@ -72,76 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
         registerOnPage();
 
-
-        previewView = findViewById(R.id.preview);
-        cameraProviderFuture = ProcessCameraProvider.getInstance(this);
-        cameraProviderFuture.addListener(() -> {
-            try {
-                ProcessCameraProvider processCameraProvider = cameraProviderFuture.get();
-                bindPreview(processCameraProvider);
-                Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }, ContextCompat.getMainExecutor(this));
-        LocalModel localModel = new LocalModel.Builder().setAssetFilePath("object_detection.tflite").build();
-        CustomObjectDetectorOptions customObjectDetectorOptions = new CustomObjectDetectorOptions.Builder(localModel)
-                .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
-                .enableClassification()
-                .setClassificationConfidenceThreshold(0.5f)
-                .setMaxPerObjectLabelCount(3)
-                .build();
-        objectDetector = ObjectDetection.getClient(customObjectDetectorOptions);
     }
 
-    private void bindPreview(ProcessCameraProvider cameraProvider) {
-        //Build preview
-        Preview preview = new Preview.Builder().build();
-        //Build camera
-        CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build();
-        preview.setSurfaceProvider(previewView.getSurfaceProvider());
-
-        //Build image capture
-        //ImageCapture imageCapture = new ImageCapture.Builder().build();
-        //Build image analysis
-        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
-                .setTargetResolution(new Size(1280,720))
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .build();
-        //Set analyzer for image analysis
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), imageProxy ->{
-            int rotation = imageProxy.getImageInfo().getRotationDegrees();
-            @SuppressLint("UnsafeOptInUsageError") Image image = imageProxy.getImage();
-
-            if (image != null){
-                InputImage inputImage = InputImage.fromMediaImage(image,rotation);
-                objectDetector.process(inputImage)
-                        .addOnSuccessListener(object -> {
-                            RelativeLayout relativeLayout = findViewById(R.id.parent_layout);
-                            for (DetectedObject i : object ){
-                                if (relativeLayout.getChildCount() > 1) relativeLayout.removeViewAt(1);
-                                String txt = "Undefined";
-                                if (i.getLabels().size() != 0)
-                                    txt = i.getLabels().get(0).getText().toString();
-
-                                Draw draw = new Draw(this,i.getBoundingBox()
-                                        ,txt);
-
-                                relativeLayout.addView(draw);
-                            }
-
-                            imageProxy.close();
-                        })
-                        .addOnFailureListener(b -> {
-                            Log.v("MainActivity", "Error - " + b.getMessage());
-                            imageProxy.close();
-                        });
-            }
-
-        });
-
-        cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis,preview);
-    }
     public void registerOnPage(){
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
