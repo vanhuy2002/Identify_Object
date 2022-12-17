@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.camera.view.PreviewView
+        android:id="@+id/preview"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="60dp"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/btn_gallary"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_gallary"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/btn_take"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_take"
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/btn_flash"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_flash"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+</RelativeLayout>
