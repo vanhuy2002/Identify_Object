@@ -10,5 +10,6 @@
     <color name="skyBlueLight">#D7F4FD</color>
     <color name="brown">#434451</color>
     <color name="color_background">#EEEEEE</color>
+    <color name="color_first">#2898B3</color>
 
 </resources>
