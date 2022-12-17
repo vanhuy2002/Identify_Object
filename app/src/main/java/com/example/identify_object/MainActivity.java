@@ -1,43 +1,12 @@
 package com.example.identify_object;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.CameraProvider;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.Preview;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.PreviewView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Rect;
-import android.media.Image;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
-import android.util.Size;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.example.identify_object.utils.Draw;
-import com.google.android.gms.tasks.Task;
+import com.example.identify_object.Adapter.ViewPagerBottomNavigationAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.common.util.concurrent.ListenableFuture;
-import com.google.mlkit.common.model.LocalModel;
-import com.google.mlkit.vision.common.InputImage;
-import com.google.mlkit.vision.objects.DetectedObject;
-import com.google.mlkit.vision.objects.ObjectDetection;
-import com.google.mlkit.vision.objects.ObjectDetector;
-import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
-
-import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
