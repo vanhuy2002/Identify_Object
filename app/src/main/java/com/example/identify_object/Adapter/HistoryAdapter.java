@@ -39,7 +39,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateVi
             return;
         }
         holder.name.setText(historyItem.getName());
-        holder.imgObj.setImageResource(CreateImage());
+        holder.imgObj.setImageResource(Integer.parseInt(historyItem.getResult().toString()));
         holder.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,9 +48,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateVi
         });
     }
 
-    private int CreateImage() {
-        return 1 ;
-    }
+
 
     @Override
     public int getItemCount() {
