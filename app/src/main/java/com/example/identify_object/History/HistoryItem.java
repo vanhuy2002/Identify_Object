@@ -1,5 +1,7 @@
 package com.example.identify_object.History;
 
+import android.net.Uri;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -10,8 +12,17 @@ public class HistoryItem {
     int id;
     @ColumnInfo(name = "name_object")
     String name;
+
+    public Uri getImageResult() {
+        return imageResult;
+    }
+
+    public void setImageResult(Uri imageResult) {
+        this.imageResult = imageResult;
+    }
+
     @ColumnInfo(name = "image_result")
-    String imageResult;
+    Uri imageResult;
 
     public int getId() {
         return id;
@@ -29,11 +40,4 @@ public class HistoryItem {
         this.name = name;
     }
 
-    public String getResult() {
-        return imageResult;
-    }
-
-    public void setResult(String result) {
-        this.imageResult = result;
-    }
 }

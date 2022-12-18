@@ -90,7 +90,7 @@ public class ScanFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_scan, container, false);
 
         root = view.findViewById(R.id.root_view);
-        btn_flash = view.findViewById(R.id.btn_flash);
+        btn_flash = view.findViewById(R.id.btn_flash_on);
 
         btn_gallery = view.findViewById(R.id.btn_gallary);
         btn_take = view.findViewById(R.id.btn_take);
