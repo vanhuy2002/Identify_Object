@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey;
 public class HistoryItem {
     @PrimaryKey(autoGenerate = true)
     int id;
-    @ColumnInfo(name = "content_create")
+    @ColumnInfo(name = "name_object")
     String name;
-    @ColumnInfo(name = "result_create")
-    String result;
+    @ColumnInfo(name = "image_result")
+    String imageResult;
 
     public int getId() {
         return id;
@@ -30,10 +30,10 @@ public class HistoryItem {
     }
 
     public String getResult() {
-        return result;
+        return imageResult;
     }
 
     public void setResult(String result) {
-        this.result = result;
+        this.imageResult = result;
     }
 }

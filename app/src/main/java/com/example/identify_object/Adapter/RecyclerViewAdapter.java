@@ -1,9 +1,12 @@
 package com.example.identify_object.Adapter;
 
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -12,13 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.identify_object.R;
 
 import java.util.List;
+import java.util.Locale;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     public List<String> list;
+    TextToSpeech textToSpeech;
+    Context context;
 
-    public RecyclerViewAdapter(List<String> list) {
+    public RecyclerViewAdapter(List<String> list, Context context) {
         this.list = list;
+        this.context = context;
     }
 
     @NonNull
@@ -32,9 +39,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String name = list.get(position);
         holder.tv_name.setText(name);
-        holder.btn_sound.setOnClickListener(click -> {
-            //playsound();
+        textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textToSpeech.setLanguage(Locale.US);
+                }
+            }
         });
+        holder.btn_sound.setOnClickListener(click -> {
+            String toSpeak = holder.tv_name.getText().toString();
+            Toast.makeText(context, toSpeak,Toast.LENGTH_SHORT).show();
+            textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+        });
+
     }
 
     @Override

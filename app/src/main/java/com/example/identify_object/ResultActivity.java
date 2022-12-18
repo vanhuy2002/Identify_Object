@@ -85,7 +85,7 @@ public class ResultActivity extends AppCompatActivity {
 
 
     private void setRecyclerAdapter() {
-        adapter = new RecyclerViewAdapter(list);
+        adapter = new RecyclerViewAdapter(list, getApplicationContext());
         recyclerView.setAdapter(adapter);
     }
 
