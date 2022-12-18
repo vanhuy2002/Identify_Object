@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.identify_object.Adapter.HistoryAdapter;
 import com.example.identify_object.Database.CreateDatabase;
+import com.example.identify_object.Database.CreateItemDAO;
 import com.example.identify_object.R;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
-        adapter = new HistoryAdapter(getActivity());
+        adapter = new HistoryAdapter(getContext());
 
         createList = new ArrayList<>();
 
