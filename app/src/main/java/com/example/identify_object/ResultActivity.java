@@ -57,10 +57,12 @@ public class ResultActivity extends AppCompatActivity {
     List<String> list;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
         list = new ArrayList<>();
         btn_back = findViewById(R.id.btnBack);
         parentView = findViewById(R.id.parent_view);
@@ -93,6 +95,7 @@ public class ResultActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
     }
     @SuppressLint("NotifyDataSetChanged")
     private void bindPreview() throws IOException {

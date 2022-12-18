@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/scan"
-        android:icon="@drawable/ic_scan"
+        android:icon="@drawable/cus_check_scan_selector"
         android:title="Quét"/>
     <item
         android:id="@+id/history"
-        android:icon="@drawable/ic_history"
+        android:icon="@drawable/cus_check_history_selector"
         android:title="Lịch sử"/>
     <item
         android:id="@+id/study"
-        android:icon="@drawable/ic_learn"
+        android:icon="@drawable/cus_check_study_selector"
         android:title="Học"/>
 </menu>

@@ -24,8 +24,13 @@
           android:layout_width="match_parent"
           android:id="@+id/bottom_menu"
           app:menu="@menu/bottom_menu"
+          style="@style/BottomNavigationText.Selected"
+          app:itemTextColor="@color/text_nav"
+          app:itemIconTint="@color/color_first"
           android:splitMotionEvents="false"
           app:labelVisibilityMode="labeled"
+          app:itemTextAppearanceInactive="@style/BottomNavigationText"
+          app:itemTextAppearanceActive="@style/BottomNavigationText.Selected"
           android:layout_height="wrap_content"
           android:layout_alignParentBottom="true"/>
    </RelativeLayout>
