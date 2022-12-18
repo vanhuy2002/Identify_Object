@@ -4,15 +4,19 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -42,14 +46,17 @@ import com.google.mlkit.vision.objects.ObjectDetector;
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 public class ScanFragment extends Fragment {
 
-    ImageView btn_gallery, btn_take, btn_flash;
+    ImageView btn_gallery, btn_take;
+    CheckBox btn_flash;
 
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     PreviewView previewView;
@@ -67,7 +74,7 @@ public class ScanFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_scan, container, false);
 
-        btn_flash = view.findViewById(R.id.btn_flash);
+        btn_flash = view.findViewById(R.id.btn_flash_on);
         btn_gallery = view.findViewById(R.id.btn_gallary);
         btn_take = view.findViewById(R.id.btn_take);
         previewView = view.findViewById(R.id.preview);
@@ -119,6 +126,7 @@ public class ScanFragment extends Fragment {
                 e.printStackTrace();
             }
         });
+        scanByGalley();
         return view;
     }
 
@@ -160,7 +168,7 @@ public class ScanFragment extends Fragment {
 
         });
 
-        cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis,preview);
+        camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis,preview);
     }
 
     @Override
@@ -179,6 +187,7 @@ public class ScanFragment extends Fragment {
                 e.printStackTrace();
             }
         }, getExecuter());
+        btn_flash.setChecked(false);
     }
 
 
@@ -247,6 +256,66 @@ public class ScanFragment extends Fragment {
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .build();
         cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture);
+    }
+
+    private void scanByGalley(){
+        btn_gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                btn_gallery.setEnabled(false);
+                btn_flash.setChecked(false);
+                startActivityForResult(intent, 102);
+            }
+        });
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 102:
+                btn_gallery.setEnabled(true);
+                if(data == null || data.getData() == null) {
+                    return;
+                }
+
+                Uri uri = data.getData();
+                InputStream inputStream = null;
+
+                try {
+                    inputStream = getActivity().getContentResolver().openInputStream(uri);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                InputImage inputImage = InputImage.fromBitmap(bitmap, 0);
+                break;
+            case 103:
+                if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+                    initializeCamera();
+                break;
+
+        }
+    }
+
+    private void flashSwitch(Camera camera) {
+        camera.getCameraControl().enableTorch(false);
+        btn_flash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btn_flash.isChecked()) {
+                    camera.getCameraControl().enableTorch(true);
+                    btn_flash.setBackgroundResource(R.drawable.ic_flash);
+                } else {
+                    camera.getCameraControl().enableTorch(false);
+                    btn_flash.setBackgroundResource(R.drawable.ic_flash_off);
+                }
+            }
+        });
     }
 
 }
