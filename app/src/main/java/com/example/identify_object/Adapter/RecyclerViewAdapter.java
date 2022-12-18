@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.content.Context;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,9 +51,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.btn_sound.setOnClickListener(click -> {
             String toSpeak = holder.tv_name.getText().toString();
-            Toast.makeText(context, toSpeak,Toast.LENGTH_SHORT).show();
             textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
         });
+
+
 
     }
 
