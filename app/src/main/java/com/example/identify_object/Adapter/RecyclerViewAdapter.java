@@ -47,6 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             }
         });
+
         holder.btn_sound.setOnClickListener(click -> {
             String toSpeak = holder.tv_name.getText().toString();
             Toast.makeText(context, toSpeak,Toast.LENGTH_SHORT).show();

@@ -12,17 +12,13 @@ public class HistoryItem {
     int id;
     @ColumnInfo(name = "name_object")
     String name;
+    @ColumnInfo(name = "image_result")
+    String imageResult;
 
-    public Uri getImageResult() {
-        return imageResult;
-    }
-
-    public void setImageResult(Uri imageResult) {
+    public HistoryItem(String name, String imageResult) {
+        this.name = name;
         this.imageResult = imageResult;
     }
-
-    @ColumnInfo(name = "image_result")
-    Uri imageResult;
 
     public int getId() {
         return id;
@@ -39,5 +35,13 @@ public class HistoryItem {
     public void setName(String name) {
         this.name = name;
     }
+    public String getImageResult() {
+        return imageResult;
+    }
+
+    public void setImageResult(String imageResult) {
+        this.imageResult = imageResult;
+    }
+
 
 }
