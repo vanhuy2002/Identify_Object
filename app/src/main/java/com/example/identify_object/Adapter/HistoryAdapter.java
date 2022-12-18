@@ -25,6 +25,7 @@ import java.util.Locale;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateViewHolder> {
     List<HistoryItem> ItemList;
     Context context;
+    TextToSpeech tts;
     TextToSpeech textToSpeech;
 
     public HistoryAdapter(Context context){ this.context = context;}
@@ -48,6 +49,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateVi
         }
         holder.name.setText(historyItem.getName());
         holder.imgObj.setImageURI(Uri.parse(historyItem.getImageResult()));
+        tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    tts.setLanguage(new Locale("vi","VN"));
+                }
+            }
+        });
         textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -58,7 +67,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateVi
         });
         holder.btnSound.setOnClickListener(click -> {
             String toSpeak = holder.name.getText().toString();
-            textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+            String vn = toSpeak.substring(0,toSpeak.indexOf("("));
+            String en = toSpeak.substring(toSpeak.indexOf("("),toSpeak.indexOf(")"));
+            Toast.makeText(context, toSpeak,Toast.LENGTH_SHORT).show();
+            tts.speak(vn,TextToSpeech.QUEUE_FLUSH,null);
+            textToSpeech.speak(en, TextToSpeech.QUEUE_FLUSH, null);
         });
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override

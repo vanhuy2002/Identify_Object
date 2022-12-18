@@ -60,7 +60,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.btn_sound.setOnClickListener(click -> {
             String toSpeak = holder.tv_name.getText().toString();
-
             String vn = toSpeak.substring(0,toSpeak.indexOf("("));
             String en = toSpeak.substring(toSpeak.indexOf("("),toSpeak.indexOf(")"));
             Toast.makeText(context, toSpeak,Toast.LENGTH_SHORT).show();
