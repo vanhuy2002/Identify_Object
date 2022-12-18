@@ -29,16 +29,19 @@
             android:fontFamily="sans-serif-light"/>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/brown"/>
-    
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+    <RelativeLayout
+        android:id="@+id/parent_view"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="100dp"
-        android:layout_gravity="center"/>
+        android:layout_width="300dp"
+        android:layout_height="300dp">
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"/>
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

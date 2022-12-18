@@ -31,7 +31,7 @@ public class Draw extends View {
 
         textPaint = new Paint();
         textPaint.setColor(Color.BLUE);
-        textPaint.setTextSize(50f);
+        textPaint.setTextSize(20f);
         textPaint.setStyle(Paint.Style.FILL);
     }
 
@@ -39,6 +39,6 @@ public class Draw extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawText(text,(float)rect.centerX(),(float)rect.centerY(),textPaint);
-        canvas.drawRect((float)rect.left, (float)rect.top, (float)rect.right, (float)rect.bottom, boundaryPaint);
+        canvas.drawRect((float)rect.left/5, (float)rect.top/5, (float)rect.right/5, (float)rect.bottom/5, boundaryPaint);
     }
 }

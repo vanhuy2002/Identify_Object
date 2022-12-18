@@ -5,12 +5,21 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+
 import android.graphics.BitmapFactory;
+
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+
+import android.provider.MediaStore;
+
 import android.speech.tts.TextToSpeech;
+
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
@@ -46,6 +55,10 @@ import com.google.mlkit.vision.objects.ObjectDetector;
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,13 +81,17 @@ public class ScanFragment extends Fragment {
     View view;
     Preview preview;
     CameraSelector cameraSelector;
+    RelativeLayout root;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_scan, container, false);
 
-        btn_flash = view.findViewById(R.id.btn_flash_on);
+        root = view.findViewById(R.id.root_view);
+        btn_flash = view.findViewById(R.id.btn_flash);
+
         btn_gallery = view.findViewById(R.id.btn_gallary);
         btn_take = view.findViewById(R.id.btn_take);
         previewView = view.findViewById(R.id.preview);
@@ -130,46 +147,6 @@ public class ScanFragment extends Fragment {
         return view;
     }
 
-    private void bindPreview(ProcessCameraProvider cameraProvider, View view) {
-        ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
-                .setTargetResolution(new Size(1280,720))
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .build();
-
-
-        //Set analyzer for image analysis
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(getContext()), imageProxy ->{
-            int rotation = imageProxy.getImageInfo().getRotationDegrees();
-            @SuppressLint("UnsafeOptInUsageError") Image image = imageProxy.getImage();
-
-            if (image != null){
-                InputImage inputImage = InputImage.fromMediaImage(image,rotation);
-                objectDetector.process(inputImage)
-                        .addOnSuccessListener(object -> {
-                            for (DetectedObject i : object ){
-//                                if (relativeLayout.getChildCount() > 1) relativeLayout.removeViewAt(1);
-                                String txt = "Undefined";
-                                if (i.getLabels().size() != 0)
-                                    txt = i.getLabels().get(0).getText().toString();
-
-                                Draw draw = new Draw(getContext(),i.getBoundingBox()
-                                        ,txt);
-
-                                previewView.addView(draw);
-                            }
-
-                            imageProxy.close();
-                        })
-                        .addOnFailureListener(b -> {
-                            Log.v("MainActivity", "Error - " + b.getMessage());
-                            imageProxy.close();
-                        });
-            }
-
-        });
-
-        camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageAnalysis,preview);
-    }
 
     @Override
     public void onPause() {
@@ -190,7 +167,17 @@ public class ScanFragment extends Fragment {
         btn_flash.setChecked(false);
     }
 
-
+    public static Bitmap loadBitmapFromView(View view) {
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable =view.getBackground();
+        if (bgDrawable!=null)
+            bgDrawable.draw(canvas);
+        else
+            canvas.drawColor(Color.WHITE);
+        view.draw(canvas);
+        return returnedBitmap;
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -200,9 +187,10 @@ public class ScanFragment extends Fragment {
             initializeCamera();
         }
     }
+    @SuppressLint("RestrictedApi")
     private void capturePhoto() throws IOException, ExecutionException, InterruptedException {
-        ProcessCameraProvider processCameraProvider = cameraProviderFuture.get();
-        bindPreview(processCameraProvider, view);
+        //ProcessCameraProvider processCameraProvider = cameraProviderFuture.get();
+        //bindPreview(processCameraProvider, view);
         File photoFile = createImageFile();
         imageCapture.takePicture(
                 new ImageCapture.OutputFileOptions.Builder(photoFile).build(),
@@ -214,6 +202,59 @@ public class ScanFragment extends Fragment {
                         Uri contentUri = Uri.fromFile(photoFile);
                         intent.putExtra("photoUri", contentUri.toString());
                         Log.e("PathMVH", contentUri.getPath());
+//                        Bitmap bitmap = null;
+//                        try {
+//                            bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), contentUri);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        View view = new View(getContext());
+//                        Canvas canvas = new Canvas(bitmap);
+//                        view.draw(canvas);
+//
+//                        ObjectDetector objectDetector;
+//                        LocalModel localModel = new LocalModel.Builder().setAssetFilePath("object_detection.tflite").build();
+//                        CustomObjectDetectorOptions customObjectDetectorOptions = new CustomObjectDetectorOptions.Builder(localModel)
+//                                .setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE)
+//                                .enableClassification()
+//                                .setClassificationConfidenceThreshold(0.5f)
+//                                .setMaxPerObjectLabelCount(4)
+//                                .build();
+//                        objectDetector = ObjectDetection.getClient(customObjectDetectorOptions);
+//                        InputImage inputImage = InputImage.fromBitmap(bitmap, 0);
+//                        objectDetector.process(inputImage)
+//                                .addOnSuccessListener(object -> {
+//                                    Log.e("MVH", object.size() + "");
+//                                    for (DetectedObject i : object ){
+////                                if (relativeLayout.getChildCount() > 1) relativeLayout.removeViewAt(1);
+//                                        Log.e("MVH", "bindPreview for nè");
+//                                        String txt = "Undefined";
+//                                        if (i.getLabels().size() != 0)
+//                                            txt = i.getLabels().get(0).getText().toString();
+//
+//                                        Draw draw = new Draw(getContext(),i.getBoundingBox()
+//                                                ,txt);
+//                                        Log.e("MVH", i.getBoundingBox().top + "|" + i.getBoundingBox().bottom + "|" + i.getBoundingBox().left + "|" + i.getBoundingBox().right);
+//
+//                                    }
+//
+//                                })
+//                                .addOnFailureListener(b -> {
+//                                    Log.e("MainActivity", "Error - " + b.getMessage());
+//                                });
+//
+//                        try {
+//                            OutputStream fOut = new FileOutputStream(createImageFile());
+//                            Bitmap bitmap1 = loadBitmapFromView(root.getRootView());
+//                            bitmap1.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+//                            fOut.flush();
+//                            fOut.close();
+////                            MediaStore.Images.Media.insertImage(getContext().getContentResolver(),file.getAbsolutePath(),file.getName(),file.getName());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+
+
                         startActivity(intent);
 
                         Toast.makeText(getContext(), "Photo has been saved successfully", Toast.LENGTH_SHORT).show();
@@ -224,6 +265,8 @@ public class ScanFragment extends Fragment {
                     }
                 }
         );
+
+
 
     }
     private File createImageFile() throws IOException {
