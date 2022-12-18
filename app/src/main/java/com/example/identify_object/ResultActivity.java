@@ -1,26 +1,18 @@
 package com.example.identify_object;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.ImageAnalysis;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.media.Image;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.util.Size;
-import android.view.View;
-import android.webkit.DownloadListener;
-import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,16 +26,13 @@ import com.google.mlkit.vision.objects.ObjectDetection;
 import com.google.mlkit.vision.objects.ObjectDetector;
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -54,7 +43,12 @@ public class ResultActivity extends AppCompatActivity {
     Uri photoUri;
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
+    String newName;
     List<String> list;
+    String name =  "";
+    OkHttpClient client = new OkHttpClient();
+
+    public String url= "https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=en&tl=vi&q=";
 
 
 
@@ -81,6 +75,8 @@ public class ResultActivity extends AppCompatActivity {
         btn_back.setOnClickListener(back -> {
             this.finish();
         });
+
+
 
     }
 
@@ -122,14 +118,23 @@ public class ResultActivity extends AppCompatActivity {
                                 Draw draw = new Draw(this,i.getBoundingBox()
                                         ,txt);
 
-                                String arr = getTextFromWeb("https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=en&tl=vi&q=" + txt);
+                                String str = txt.replaceAll("\\s+","");
+                                OkHttpHandler okHttpHandler= new OkHttpHandler();
+                                okHttpHandler.execute(url+str);
 
-                                Log.e("MVH", arr);
+                                name = txt;
+                                 new Handler().postDelayed(new Runnable() {
+                                     @Override
+                                     public void run() {
+                                         if (object.size()!=0){
+                                             list.add(newName + " \n(" + name + ")");
+                                             adapter.notifyDataSetChanged();
+                                         }
+                                     }
+                                 },2000);
 
-                                if (object.size()!=0) {
-                                    list.add(txt);
-                                    adapter.notifyDataSetChanged();
-                                }
+
+
                                 parentView.addView(draw);
                             }
 
@@ -141,40 +146,47 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
-    public String getTextFromWeb(String urlString)
-    {
-        WebView webView = new WebView(this);
-        webView.loadUrl(urlString);
-        Log.e("MVH", "AA" + webView.getTitle());
-        webView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                Log.e("MVH", "AA");
-            }
-        });
+    String doGetRequest(String url) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
 
-        File sdcard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        Response response = client.newCall(request).execute();
 
-        //Get the text file
-        File file = new File(sdcard,"json.txt");
-        //Read text from file
-        StringBuilder text = new StringBuilder();
+        return response.body().string();
 
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
+    }
 
-            while ((line = br.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-            }
-            br.close();
+    public class OkHttpHandler extends AsyncTask {
+
+        OkHttpClient client = new OkHttpClient();
+
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
         }
-        catch (IOException e) {
-            //You'll need to add proper error handling here
+
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            Request.Builder builder = new Request.Builder();
+            builder.url((String) objects[0]);
+            Request request = builder.build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+               String s = response.body().string();
+               newName = s.substring(2,s.length() - 2);
+
+               Log.e("MVH", newName);
+                return response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
         }
-        //file.delete();
-        return text.toString();
     }
 
 }
