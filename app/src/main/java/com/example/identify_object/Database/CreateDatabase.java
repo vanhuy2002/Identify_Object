@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.identify_object.History.HistoryItem;
 
-@Database(entities = {HistoryItem.class}, version = 1)
+@Database(entities = {HistoryItem.class}, version = 2)
 public abstract class CreateDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "create.db";
     private static CreateDatabase instance;

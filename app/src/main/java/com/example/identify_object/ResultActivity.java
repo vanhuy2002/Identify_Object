@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.identify_object.Adapter.RecyclerViewAdapter;
+import com.example.identify_object.Database.CreateDatabase;
+import com.example.identify_object.History.HistoryItem;
 import com.example.identify_object.utils.Draw;
 import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.vision.common.InputImage;
@@ -129,6 +131,8 @@ public class ResultActivity extends AppCompatActivity {
                                          if (object.size()!=0){
                                              list.add(newName + " \n(" + name + ")");
                                              adapter.notifyDataSetChanged();
+                                             CreateDatabase.getInstance(ResultActivity.this).createItemDAO().insertItem(new HistoryItem(newName + " (" + name + ")" , photoUri.toString() ));
+
                                          }
                                      }
                                  },2000);

@@ -1,6 +1,7 @@
 package com.example.identify_object.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateVi
             return;
         }
         holder.name.setText(historyItem.getName());
-        holder.imgObj.setImageResource(Integer.parseInt(historyItem.getResult().toString()));
+        holder.imgObj.setImageURI(Uri.parse(historyItem.getImageResult()));
         holder.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
