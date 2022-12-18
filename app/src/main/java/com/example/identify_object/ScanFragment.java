@@ -164,13 +164,13 @@ public class ScanFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        ProcessCameraProvider processCameraProvider = null;
-//        try {
-//            processCameraProvider = cameraProviderFuture.get();
-//        } catch (InterruptedException | ExecutionException e) {
-//            e.printStackTrace();
-//        }
-//        startCameraX(processCameraProvider);
+        try {
+            ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+            startCameraX(cameraProvider);
+
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initializeCamera() {
