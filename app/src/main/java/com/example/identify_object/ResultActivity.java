@@ -131,7 +131,7 @@ public class ResultActivity extends AppCompatActivity {
                                          if (object.size()!=0){
                                              list.add(newName + " \n(" + name + ")");
                                              adapter.notifyDataSetChanged();
-                                             CreateDatabase.getInstance(ResultActivity.this).createItemDAO().insertItem(new HistoryItem(newName + " (" + name + ")" , photoUri.toString() ));
+                                             CreateDatabase.getInstance(ResultActivity.this).createItemDAO().insertItem(new HistoryItem(newName + "\n(" + name + ")" , photoUri.toString() ));
 
                                          }
                                      }
