@@ -150,7 +150,27 @@ public class ScanFragment extends Fragment {
 
     @Override
     public void onPause() {
+//        ProcessCameraProvider processCameraProvider = null;
+//        try {
+//            processCameraProvider = cameraProviderFuture.get();
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
+//        assert processCameraProvider != null;
+//        processCameraProvider.unbindAll();
         super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+            startCameraX(cameraProvider);
+
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initializeCamera() {
@@ -186,6 +206,7 @@ public class ScanFragment extends Fragment {
                 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             initializeCamera();
         }
+
     }
     @SuppressLint("RestrictedApi")
     private void capturePhoto() throws IOException, ExecutionException, InterruptedException {
@@ -298,7 +319,8 @@ public class ScanFragment extends Fragment {
         imageCapture = new ImageCapture.Builder()
                 .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                 .build();
-        cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture);
+        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageCapture);
+        flashSwitch(camera);
     }
 
     private void scanByGalley(){
@@ -326,6 +348,9 @@ public class ScanFragment extends Fragment {
                 }
 
                 Uri uri = data.getData();
+                Intent intent = new Intent(getContext(),ResultActivity.class);
+                intent.putExtra("photoUri", uri.toString());
+                startActivity(intent);
                 InputStream inputStream = null;
 
                 try {

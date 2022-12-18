@@ -23,6 +23,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public List<String> list;
     TextToSpeech textToSpeech;
     Context context;
+    TextToSpeech tts;
 
     public RecyclerViewAdapter(List<String> list, Context context) {
         this.list = list;
@@ -40,6 +41,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         String name = list.get(position);
         holder.tv_name.setText(name);
+        tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    tts.setLanguage(new Locale("vi","VN"));
+                }
+            }
+        });
         textToSpeech = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -51,7 +60,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.btn_sound.setOnClickListener(click -> {
             String toSpeak = holder.tv_name.getText().toString();
-            textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+
+            String vn = toSpeak.substring(0,toSpeak.indexOf("("));
+            String en = toSpeak.substring(toSpeak.indexOf("("),toSpeak.indexOf(")"));
+            Toast.makeText(context, toSpeak,Toast.LENGTH_SHORT).show();
+            tts.speak(vn,TextToSpeech.QUEUE_FLUSH,null);
+            textToSpeech.speak(en, TextToSpeech.QUEUE_FLUSH, null);
         });
 
 
