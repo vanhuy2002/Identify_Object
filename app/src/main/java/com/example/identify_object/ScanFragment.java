@@ -2,7 +2,9 @@ package com.example.identify_object;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -11,7 +13,9 @@ import android.graphics.drawable.Drawable;
 
 import android.graphics.BitmapFactory;
 
+import android.media.AudioManager;
 import android.media.Image;
+import android.media.ToneGenerator;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -74,6 +78,8 @@ public class ScanFragment extends Fragment {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     PreviewView previewView;
     ImageCapture imageCapture;
+
+    private boolean st_beep = true;
 
     private ObjectDetector objectDetector;
     Camera camera;
@@ -164,6 +170,8 @@ public class ScanFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("sp_beep", Context.MODE_PRIVATE);
+        st_beep = sharedPreferences.getBoolean("sp_beep", false);
         try {
             ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
             startCameraX(cameraProvider);
@@ -221,6 +229,7 @@ public class ScanFragment extends Fragment {
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                         Intent intent = new Intent(getContext(), ResultActivity.class);
                         Uri contentUri = Uri.fromFile(photoFile);
+                        beep();
                         intent.putExtra("photoUri", contentUri.toString());
                         Log.e("PathMVH", contentUri.getPath());
 //                        Bitmap bitmap = null;
@@ -384,6 +393,13 @@ public class ScanFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void beep() {
+        if (st_beep) {
+            ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+            toneG.startTone(ToneGenerator.TONE_PROP_BEEP, 200);
+        }
     }
 
 }
