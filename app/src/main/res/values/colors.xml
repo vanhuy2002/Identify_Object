@@ -17,4 +17,8 @@
 <color name="color_icon_navi">#FF000000</color>
 <color name="text_color_primary">#4D4949</color>
 <color name="color_grey">#D9D9D9</color>
+    <color name="text_color_1">#616F85</color>
+    <color name="btnCreate">#FFFFFFFF</color>
+    <color name="item_list">#E6F6FE</color>
+
 </resources>

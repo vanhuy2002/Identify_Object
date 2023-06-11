@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.identify_object.History.HistoryFragment;
 import com.example.identify_object.ScanFragment;
-import com.example.identify_object.StudyFragment;
+import com.example.identify_object.SettingsFragment;
 
 
 public class ViewPagerBottomNavigationAdapter extends FragmentStateAdapter {
@@ -22,7 +22,7 @@ public class ViewPagerBottomNavigationAdapter extends FragmentStateAdapter {
             case 1:
                 return new HistoryFragment();
             case 2:
-                return new StudyFragment();
+                return new SettingsFragment();
             default:
                 return new ScanFragment();
         }
