@@ -11,5 +11,10 @@
     <color name="brown">#434451</color>
     <color name="color_background">#EEEEEE</color>
     <color name="color_first">#2898B3</color>
+    <color name="white_no_change">#FFFFFF</color>
+    <color name="btn_color_primary">#769FCD</color>
 
+<color name="color_icon_navi">#FF000000</color>
+<color name="text_color_primary">#4D4949</color>
+<color name="color_grey">#D9D9D9</color>
 </resources>
