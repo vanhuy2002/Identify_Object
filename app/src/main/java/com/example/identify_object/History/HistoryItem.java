@@ -4,6 +4,8 @@ public class HistoryItem {
     String id;
     String name;
 
+    public HistoryItem(){}
+
     public HistoryItem(String name) {
         id = String.valueOf(System.currentTimeMillis());
         this.name = name;
