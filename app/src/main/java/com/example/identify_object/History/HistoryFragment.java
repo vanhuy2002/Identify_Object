@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.identify_object.Adapter.HistoryAdapter;
-import com.example.identify_object.Database.CreateDatabase;
-import com.example.identify_object.Database.CreateItemDAO;
 import com.example.identify_object.R;
 
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class HistoryFragment extends Fragment {
     }
 
     private void loadData() {
-        createList = CreateDatabase.getInstance(getContext()).createItemDAO().getListItem();
+//        createList = CreateDatabase.getInstance(getContext()).createItemDAO().getListItem();
         adapter.setData(createList);
     }
 

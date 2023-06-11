@@ -1,30 +1,19 @@
 package com.example.identify_object.History;
 
-import android.net.Uri;
-
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-@Entity(tableName = "create_item")
-
 public class HistoryItem {
-    @PrimaryKey(autoGenerate = true)
-    int id;
-    @ColumnInfo(name = "name_object")
+    String id;
     String name;
-    @ColumnInfo(name = "image_result")
-    String imageResult;
 
-    public HistoryItem(String name, String imageResult) {
+    public HistoryItem(String name) {
+        id = String.valueOf(System.currentTimeMillis());
         this.name = name;
-        this.imageResult = imageResult;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -34,13 +23,6 @@ public class HistoryItem {
 
     public void setName(String name) {
         this.name = name;
-    }
-    public String getImageResult() {
-        return imageResult;
-    }
-
-    public void setImageResult(String imageResult) {
-        this.imageResult = imageResult;
     }
 
 

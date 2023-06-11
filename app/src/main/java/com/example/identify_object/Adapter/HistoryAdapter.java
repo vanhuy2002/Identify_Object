@@ -48,7 +48,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateVi
             return;
         }
         holder.name.setText(historyItem.getName());
-        holder.imgObj.setImageURI(Uri.parse(historyItem.getImageResult()));
+//        holder.imgObj.setImageURI(Uri.parse(historyItem.getImageResult()));
         tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
