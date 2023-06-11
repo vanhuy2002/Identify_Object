@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "947723334295",
+    "project_id": "identifyobject-84892",
+    "storage_bucket": "identifyobject-84892.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947723334295:android:a01140f7ea1e12cb65efd2",
+        "android_client_info": {
+          "package_name": "com.example.identify_object"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947723334295-jradjc34e3ru715cthftpqfeltddfami.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.identify_object",
+            "certificate_hash": "95db7dc2bd1648c2f9b34e3d0ae23ddd678ed170"
+          }
+        },
+        {
+          "client_id": "947723334295-oe19f1cq6b28eqf4u3ejpm5l33cnmviq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.identify_object",
+            "certificate_hash": "2dc266903a51238ff1bd026ab019b35f19dbc335"
+          }
+        },
+        {
+          "client_id": "947723334295-odvcn5a7ns0ojd7tmh4chju8c1tk0t25.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdsN_dArJP9t4vSH6V_1DHnjnIYIcfvOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947723334295-odvcn5a7ns0ojd7tmh4chju8c1tk0t25.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

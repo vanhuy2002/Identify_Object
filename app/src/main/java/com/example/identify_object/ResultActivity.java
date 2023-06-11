@@ -120,7 +120,7 @@ public class ResultActivity extends AppCompatActivity {
                                 Draw draw = new Draw(this,i.getBoundingBox()
                                         ,txt);
 
-                                String str = txt.replaceAll("\\s+","");
+                                String str = txt.replaceAll("\\s+","%20");
                                 OkHttpHandler okHttpHandler= new OkHttpHandler();
                                 okHttpHandler.execute(url+str);
 
