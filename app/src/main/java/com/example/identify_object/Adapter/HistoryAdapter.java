@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.identify_object.History.HistoryItem;
+import com.example.identify_object.OnClickItemInterface;
 import com.example.identify_object.R;
 
 import java.util.List;
@@ -28,7 +29,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateVi
     TextToSpeech tts;
     TextToSpeech textToSpeech;
 
-    public HistoryAdapter(Context context){ this.context = context;}
+    OnClickItemInterface onClick;
+
+    public HistoryAdapter(Context context, OnClickItemInterface onClick){
+        this.context = context;
+        this.onClick = onClick;
+    }
     public void setData(List<HistoryItem> data) {
         this.ItemList = data;
         notifyDataSetChanged();
@@ -65,6 +71,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateVi
                 }
             }
         });
+        holder.layoutItem.setOnClickListener(v -> onClick.itemClick(historyItem));
         holder.btnSound.setOnClickListener(click -> {
             String toSpeak = holder.name.getText().toString();
             String vn = toSpeak.substring(0,toSpeak.indexOf("("));
