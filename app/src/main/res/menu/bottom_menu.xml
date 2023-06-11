@@ -11,5 +11,5 @@
     <item
         android:id="@+id/study"
         android:icon="@drawable/cus_check_study_selector"
-        android:title="Học"/>
+        android:title="Cài đặt"/>
 </menu>
