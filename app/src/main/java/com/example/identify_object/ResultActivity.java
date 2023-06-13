@@ -63,6 +63,8 @@ public class ResultActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseUser user;
     private FirebaseFirestore db;
+
+    private int check = 0;
     private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class ResultActivity extends AppCompatActivity {
         setRecyclerView();
         setRecyclerAdapter();
         intent = getIntent();
+        check = intent.getIntExtra("type",0);
         photoUri = Uri.parse(intent.getStringExtra("photoUri"));
         img_result.setImageURI(photoUri);
         try {
@@ -141,7 +144,8 @@ public class ResultActivity extends AppCompatActivity {
                                      if (!object.isEmpty()){
                                          list.add(newName + " \n(" + name + ")");
                                          adapter.notifyDataSetChanged();
-                                         uploadDB(bitmap, name);
+                                         if (check != 1)
+                                            uploadDB(bitmap, newName + " \n(" + name + ")");
                                      }
                                  },2000);
 

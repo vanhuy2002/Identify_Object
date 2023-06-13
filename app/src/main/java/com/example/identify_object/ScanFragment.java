@@ -173,8 +173,12 @@ public class ScanFragment extends Fragment {
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("sp_beep", Context.MODE_PRIVATE);
         st_beep = sharedPreferences.getBoolean("sp_beep", false);
         try {
-            ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-            startCameraX(cameraProvider);
+            if (cameraProviderFuture != null){
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                startCameraX(cameraProvider);
+            }
+
+
 
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
