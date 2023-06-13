@@ -153,9 +153,7 @@ public class ResultActivity extends AppCompatActivity {
                             }
 
                         })
-                        .addOnFailureListener(b -> {
-                            Log.e("MainActivity", "Error - " + b.getMessage());
-                        });
+                        .addOnFailureListener(b -> Log.e("MainActivity", "Error - " + b.getMessage()));
 
 
     }
@@ -167,8 +165,8 @@ public class ResultActivity extends AppCompatActivity {
 
         String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, item.getId(), "image");
         Uri uri = Uri.parse(path);
-        storageReference.child("Users/" + user.getUid() + "/" + item.getId() + ".jpg");
-        storageReference.putFile(uri).addOnCompleteListener(task -> {
+        StorageReference img = storageReference.child("Users/" + user.getUid() + "/" + item.getId() + ".jpg");
+        img.putFile(uri).addOnCompleteListener(task -> {
             File fdelete = new File(getRealPathFromURI(this, uri));
             if (fdelete.exists()) {
                 fdelete.delete();
