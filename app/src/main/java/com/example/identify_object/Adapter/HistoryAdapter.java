@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.bumptech.glide.request.target.Target;
 import com.example.identify_object.History.HistoryItem;
 import com.example.identify_object.OnClickItemInterface;
 import com.example.identify_object.R;
+import com.example.identify_object.ResultActivity;
 import com.example.identify_object.iLoadImage;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -31,6 +33,9 @@ import java.util.Locale;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateViewHolder> {
     List<HistoryItem> ItemList;
+
+    public String url= "https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=en&tl=vi&q=";
+
     Context context;
     TextToSpeech tts;
     TextToSpeech textToSpeech;
@@ -79,9 +84,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.CreateVi
                 textToSpeech.setLanguage(Locale.US);
             }
         });
-        holder.layoutItem.setOnClickListener(v -> onClick.itemClick(historyItem));
+        holder.layoutItem.setOnClickListener(v -> onClick.itemClick(historyItem, holder.imgObj));
         holder.btnSound.setOnClickListener(click -> {
             String toSpeak = holder.name.getText().toString();
+
+
             String vn = toSpeak.substring(0,toSpeak.indexOf("("));
             String en = toSpeak.substring(toSpeak.indexOf("("),toSpeak.indexOf(")"));
             Toast.makeText(context, toSpeak,Toast.LENGTH_SHORT).show();

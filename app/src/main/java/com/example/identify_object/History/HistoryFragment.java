@@ -1,12 +1,17 @@
 package com.example.identify_object.History;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +32,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,9 +63,13 @@ public class HistoryFragment extends Fragment implements iLoadImage {
         recyclerView = view.findViewById(R.id.recycler_view);
         adapter = new HistoryAdapter(getContext(), new OnClickItemInterface() {
             @Override
-            public boolean itemClick(HistoryItem model) {
+            public boolean itemClick(HistoryItem model, ImageView img) {
                 Intent intent = new Intent(getContext(), ResultActivity.class);
 
+                intent.putExtra("type", 1);
+                intent.putExtra("photoUri", getUriFromImageView(img).toString());
+
+                startActivity(intent);
                 return true;
             }
             @Override
@@ -101,6 +111,26 @@ public class HistoryFragment extends Fragment implements iLoadImage {
                 });
     }
 
+    public Uri getUriFromImageView(ImageView imageView) {
+        Drawable drawable = imageView.getDrawable();
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+
+            return getImageUri(requireContext(), bitmap);
+        }
+
+        return null;
+    }
+
+    // Method to get the URI from a bitmap
+    public Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
+    }
     @Override
     public Target<Drawable> setImage(RequestManager glideRequest, HistoryAdapter.CreateViewHolder holder, Uri uri) {
         return glideRequest.load(uri)

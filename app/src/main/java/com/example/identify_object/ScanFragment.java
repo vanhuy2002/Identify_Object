@@ -165,8 +165,12 @@ public class ScanFragment extends Fragment {
     public void onResume() {
         super.onResume();
         try {
-            ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-            startCameraX(cameraProvider);
+            if (cameraProviderFuture != null){
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                startCameraX(cameraProvider);
+            }
+
+
 
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
