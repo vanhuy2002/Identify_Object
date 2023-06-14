@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.identify_object.authenticate.LoginActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingsFragment extends Fragment {
@@ -24,7 +27,7 @@ public class SettingsFragment extends Fragment {
         SharedPreferences beep_SP;
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        Button btnLogout = view.findViewById(R.id.btn_logout);
+        AppCompatImageButton btnLogout = view.findViewById(R.id.btn_logout);
         SwitchCompat sw_beep = view.findViewById(R.id.sw_beep);
         beep_SP = requireActivity().getSharedPreferences("sp_beep", Context.MODE_PRIVATE);
         sw_beep.setChecked(beep_SP.getBoolean("sp_beep", false));
@@ -39,6 +42,21 @@ public class SettingsFragment extends Fragment {
                 editor.apply();
                 sw_beep.setChecked(false);
             }
+        });
+        mAuth = FirebaseAuth.getInstance();
+
+        gsc = GoogleSignIn.getClient(requireContext(),
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getResources().getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build());
+
+        btnLogout.setOnClickListener(v -> {
+            gsc.signOut();
+            mAuth.signOut();
+            Intent intent = new Intent(requireContext(), LoginActivity.class);
+            startActivity(intent);
+            requireActivity().finish();
         });
         return view;
     }

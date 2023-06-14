@@ -1,0 +1,9 @@
+
+c
+java:S1192 "HDefine a constant instead of duplicating this literal "sp_beep" 4 times.(ß…„ðøÿÿÿÿ
+o
+java:S1450"RRemove the "gsc" field and declare it as a local variable in the relevant methods.(ú¬Áø8Ï§ÔÄ‹1
+q
+java:S1450"TRemove the "mAuth" field and declare it as a local variable in the relevant methods.(ªÐ”’8Ð§ÔÄ‹1
+P
+java:S1161":Add the "@Override" annotation above this method signature(«ÃÀ÷

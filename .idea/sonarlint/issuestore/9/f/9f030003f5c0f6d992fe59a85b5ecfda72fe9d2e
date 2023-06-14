@@ -1,0 +1,45 @@
+
+K
+java:S1604Ç"(Make this anonymous inner class a lambda(ÌÖşÿÿÿÿ8”ê‹øö0
+F
+java:S1604÷"(Make this anonymous inner class a lambda(ÊÈÕ†8–ê‹øö0
+n
+java:S1301×"KReplace this "switch" statement by "if" statements to increase readability.(×ö³–úÿÿÿÿ8˜ê‹øö0
+H
+java:S1659G"&Declare "btn_take" on a separate line.(åë‚ùÿÿÿÿ8ÿì‹øö0
+
+java:S1450N"]Remove the "objectDetector" field and declare it as a local variable in the relevant methods.(«·é¦ıÿÿÿÿ8€í‹øö0
+]	java:S125k"<This block of commented-out lines of code should be removed.(æ»Òäûÿÿÿÿ8£í‹øö0
+ƒ
+java:S3252„"eUse static access with "com.google.mlkit.vision.objects.ObjectDetectorOptionsBase" for "STREAM_MODE".(û™¤¾8ÿú»ÈŠ1
+|
+java:S2142"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(­öÌú8ªí‹øö0
+F
+java:S1185˜"(Remove this method to simply inherit it.(ßû¢½8ıàğ£‰1
+X	java:S125™"<This block of commented-out lines of code should be removed.(úÑ™W8®í‹øö0
+|
+java:S2142«"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(åÅç“8±í‹øö0
+|
+java:S2142·"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(åÅç“8û»ÈŠ1
+
+java:S1130Ô"€Remove the declaration of thrown exception 'java.util.concurrent.ExecutionException', as it cannot be thrown from method's body.(­ãï58®û»ÈŠ1
+”
+java:S1130Ô"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(­ãï58®û»ÈŠ1
+^	java:S125Õ"<This block of commented-out lines of code should be removed.(áŠÿÿÿÿÿ8Ìí‹øö0
+Y	java:S125â"<This block of commented-out lines of code should be removed.(ĞÇÛï8Öí‹øö0
+^	java:S125ª"<This block of commented-out lines of code should be removed.(½³™ıÿÿÿÿ8Şí‹øö0
+X
+java:S1117Â":Rename "camera" which hides the field declared at line 79.(çãŸ‡8åí‹øö0
+O
+java:S1905Â"1Remove this unnecessary cast to "LifecycleOwner".(çãŸ‡8İû»ÈŠ1
+a
+java:S1854ë">Remove this useless assignment to local variable "inputImage".(ğàø›ÿÿÿÿÿ8ëí‹øö0
+D	java:S131×""Add a default case to this switch.(×ö³–úÿÿÿÿ8óí‹øö0
+R
+java:S1481ë"/Remove this unused "inputImage" local variable.(ğàø›ÿÿÿÿÿ8ùí‹øö0
+t
+java:S3252î"WUse static access with "androidx.core.content.ContextCompat" for "checkSelfPermission".(ŠÕÂ>8íáğ£‰1
+@
+java:S1128?"Remove this duplicated import.(ªº»Úıÿÿÿÿ8ÿí‹øö0
+T
+java:S1068N"2Remove this unused "objectDetector" private field.(«·é¦ıÿÿÿÿ8î‹øö0

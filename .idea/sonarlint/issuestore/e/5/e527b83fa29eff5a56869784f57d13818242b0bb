@@ -1,0 +1,18 @@
+
+F
+java:S3740Ó"/Provide the parametrized type for this generic.(ïü‰ð
+j
+java:S1104="OMake url a static final constant or non-public and provide accessors if needed.(Œ‘ÎÏüÿÿÿÿ
+n
+java:S1450?"SRemove the "auth" field and declare it as a local variable in the relevant methods.(Ú‡›æøÿÿÿÿ
+B
+java:S1602^",Remove useless curly braces around statement(Ó’¥º
+†
+java:S3252x"kUse static access with "com.google.mlkit.vision.objects.ObjectDetectorOptionsBase" for "SINGLE_IMAGE_MODE".(˜Ç¾Âûÿÿÿÿ
+Q	java:S899±";Do something with the "boolean" value returned by "delete".(ññ†à
+e
+java:S4042±"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(ññ†à
+V
+java:S1117È":Rename "client" which hides the field declared at line 59.(ü€±æúÿÿÿÿ
+D
+java:S1185Ù"(Remove this method to simply inherit it.(¤‹Å¬úÿÿÿÿ

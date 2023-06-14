@@ -136,6 +136,7 @@ public class ResultActivity extends AppCompatActivity {
                                         ,txt);
 
                                 String str = txt.replaceAll("\\s+","%20");
+                                Log.e("AAA", "bindPreview: "+ str );
                                 OkHttpHandler okHttpHandler= new OkHttpHandler();
                                 okHttpHandler.execute(url+str);
 
@@ -147,7 +148,7 @@ public class ResultActivity extends AppCompatActivity {
                                          if (check != 1)
                                             uploadDB(bitmap, newName + " \n(" + name + ")");
                                      }
-                                 },2000);
+                                 },3500);
 
 
 

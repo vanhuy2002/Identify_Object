@@ -1,0 +1,13 @@
+
+q
+java:S1104%"OMake url a static final constant or non-public and provide accessors if needed.(Œ‘ÎÏüÿÿÿÿ8Ÿ‚¨Ä‹1
+n
+java:S1104‡"RMake imgObj a static final constant or non-public and provide accessors if needed.(½– Œúÿÿÿÿ
+s
+java:S1104‰"WMake glideTarget a static final constant or non-public and provide accessors if needed.(„ Äèûÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(×•¤€
+;
+java:S1075e"&Remove this hard-coded path-delimiter.(³ëj
+Q	java:S125i"<This block of commented-out lines of code should be removed.(ÑõÙÈ
+>
+java:S1659ˆ"'Declare "btnDelete" on a separate line.(Èı˜

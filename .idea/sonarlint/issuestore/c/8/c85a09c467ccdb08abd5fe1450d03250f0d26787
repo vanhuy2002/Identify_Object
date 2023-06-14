@@ -1,0 +1,8 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¶¾åô
+n
+java:S1450,"SRemove the "auth" field and declare it as a local variable in the relevant methods.(Ú‡›æøÿÿÿÿ
+U
+java:S11614":Add the "@Override" annotation above this method signature(ËÄ•åûÿÿÿÿ
+H
+java:S1075O"&Remove this hard-coded path-delimiter.(Íû—êúÿÿÿÿ8Ñå–ËŠ1
